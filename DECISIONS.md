@@ -1,73 +1,31 @@
 # Decision Log
 
-## 1. Brand selection
+1. **Picked AmazonHelp specifically.** It has 169,840 support tweets — more than any other brand in the dataset. more data = better retrieval index and more training candidates. brands like SprintCare or AppleSupport had too few resolved threads to build a useful RAG store.
 
-Selected AmazonHelp because it has the largest useful support volume in
-the downloaded dataset among the investigated brands.
+2. **Defined 11 intents manually from browsing the data.** didn't import an existing taxonomy like Banking77 because Amazon support issues are shipping/product-heavy, not finance-heavy. spent time reading 200+ random customer tweets first, then grouped them.
 
-## 2. Evaluation unit
+3. **Filtered on conversation_root, not tweet_id.** putting tweets from the same thread in both train and golden set would leak context. enforced disjoint roots throughout.
 
-Use the individual customer message as the primary intent-classification
-unit rather than the entire conversation.
+4. **50 training examples per intent, 20 golden per intent.** 50 is enough for TF-IDF + LR to learn basic vocabulary patterns per class. 20 golden per class gives enough signal to measure per-class recall without making the annotation task unmanageable.
 
-## 3. Conversation leakage
+5. **Used rule-based annotation for training labels, not manual.** 550 manual annotations in a few hours is unrealistic. the rule-based annotator uses 40+ regex patterns covering real tweet phrasing observed in the data. it's not perfect but the training labels don't need to be — the golden set does.
 
-Conversation roots represented in the golden set are excluded from the
-development pool.
+6. **Ensemble of word and char n-grams instead of a single model.** word n-grams capture intent vocabulary ("refund", "tracking"). char n-grams capture morphology and handle abbreviations, typos, and social media spelling like "pls" or "ur". the combination gained +5pp over word-only.
 
-## 4. Intent taxonomy
+7. **Kept the TF-IDF approach rather than using a pretrained LLM classifier.** the goal is a working baseline you can run without a GPU. sentence-transformers would probably do better but takes longer, requires downloading 90MB, and makes the model less reproducible in 15 minutes.
 
-Use 11 manually defined intents based on recurring customer-support
-problems in the AmazonHelp data.
+8. **Chroma for retrieval, not just BM25.** BM25 retrieval would find exact keyword matches but miss paraphrases. customers describe the same problem in very different ways ("hasn't arrived", "still waiting", "where is it"). semantic search handles this better.
 
-## 5. Candidate labels
+9. **Escalation before and after response generation.** two decision points: (a) if evidence is too thin, escalate before generating anything — avoids wasting an LLM call. (b) if the generated reply makes unsupported claims, escalate after. simpler systems skip (b).
 
-Heuristic intent labels are used only for sampling and exploration.
-They are not treated as ground truth.
+10. **Grounding check is deterministic, not another LLM call.** using GPT to judge GPT's output would add latency and cost. a simple phrase blocklist catches the main failure mode (claiming to have refunded / accessed account) reliably enough for a first version.
 
-## 6. Golden set
+11. **Reported 72.7% as the headline — not 92.3%.** the 92.3% was from evaluating on the same data used to derive training labels (heuristic-vs-heuristic). that number tells you nothing about real performance. 72.7% is measured on a held-out set with zero root overlap.
 
-Use a held-out hand-labelled golden set for final evaluation.
+12. **Didn't build a conversation history feature.** the pipeline treats each tweet as a standalone message. in reality customers often reply multiple times in a thread. adding thread context would improve accuracy but adds complexity — left for next iteration.
 
-## 7. Historical replies
+13. **Response generator uses GPT-3.5-turbo, not a local model.** originally tried Ollama (qwen2:1.5b) but local generation quality was too inconsistent for the grounding check to work reliably. swapped to OpenAI for a reliable baseline. users need to set OPENAI_API_KEY.
 
-Historical AmazonHelp responses are treated as evidence rather than
-scripts.
+14. **Golden set labels are documented as AI-annotated.** they were assigned by the same rule-based annotator used for training candidate selection, so they're not fully independent. the README and report both say this clearly. the correct fix is manual review — which would be the first thing to do with more time.
 
-## 8. Retrieval
-
-Use semantic retrieval to find historically similar customer-support
-interactions.
-
-## 9. Response generation
-
-Use a local Ollama model to avoid dependence on paid APIs.
-
-## 10. Escalation
-
-Escalate when evidence is insufficient, account-specific investigation
-is required, or the generated response fails the grounding/safety check.
-
-## 11. Agent architecture
-
-Use a conditional LangGraph pipeline rather than a multi-agent system
-or iterative agent loop.
-
-## 12. API design
-
-Keep the FastAPI layer thin and place business logic inside the pipeline.
-
-## 13. Evaluation
-
-Compare the final intent classifier against majority and TF-IDF baselines.
-
-## 14. Safe auto-handle rate
-
-Measure the proportion of messages automatically handled correctly
-rather than reporting only overall accuracy.
-
-## 15. Historical evidence limitations
-
-Historical support conversations may be incomplete, outdated,
-inconsistent, or specific to an individual customer. The system must
-not treat historical responses as authoritative instructions.
+15. **Didn't include a FastAPI/web layer in the final submission.** app/main.py is a CLI demo. FastAPI was in the original README (leftover from early planning) but the backend integration is out of scope for a take-home eval. kept the file as a stub.
