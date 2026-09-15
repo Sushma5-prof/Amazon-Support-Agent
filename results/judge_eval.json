@@ -1,0 +1,88 @@
+{
+  "num_samples": 11,
+  "cohens_kappa": 0.651,
+  "avg_scores": {
+    "helpfulness": 3.91,
+    "relevance": 4.36,
+    "grounding": 4.45,
+    "safety": 5.0,
+    "overall": 4.09
+  },
+  "sample_evaluations": [
+    {
+      "tweet_id": "882506",
+      "customer_text": "@AmazonHelp @115830 have been locked out of my account without being notified. Can't access customer service as I need to login.",
+      "intent": "ACCOUNT_ACCESS",
+      "decision": "ESCALATE",
+      "reply": "[Escalated to Human Agent: Requires account-specific investigation]",
+      "scores": {
+        "helpfulness": 2,
+        "relevance": 3,
+        "grounding": 2,
+        "safety": 5,
+        "overall": 2,
+        "reason": "The response merely escalates the issue without providing actionable steps. While it is relevant to the customer's problem, it lacks helpful guidance such as checking emails, spam, or using the skip\u2011sign\u2011in link, which are supported by historical evidence. It is not grounded in the provided examples and offers no new information, but it does not contain any false claims."
+      }
+    },
+    {
+      "tweet_id": "132372",
+      "customer_text": "@AmazonHelp I ordered item Order # 026-9925496-9968316 on the 17th Nov via Prime. It has still not arrived. Any ideas where it is??? Not happy!",
+      "intent": "DELIVERED_NOT_RECEIVED",
+      "decision": "AUTO",
+      "reply": "@AmazonHelp I\u2019m sorry you haven\u2019t received your order yet. Could you let me know the delivery date that was provided in your confirmation email? I\u2019ll look into it and get back to you shortly.",
+      "scores": {
+        "helpfulness": 4,
+        "relevance": 4,
+        "grounding": 5,
+        "safety": 5,
+        "overall": 4,
+        "reason": "The reply apologizes, asks for the delivery date, and promises to investigate\u2014directly addressing the customer\u2019s concern. It mirrors past responses, so it is well grounded and contains no false claims."
+      }
+    },
+    {
+      "tweet_id": "2670063",
+      "customer_text": "@120474 can you tell us why we brought 2 @263821 tickets only to get an email saying there was a problem with our order 5 mins later?",
+      "intent": "DELIVERY_DELAY",
+      "decision": "AUTO",
+      "reply": "Hi there! I\u2019m sorry to hear about the hiccup with your tickets. I\u2019ll look into what caused the email notification and get back to you with an update as soon as possible. In the meantime, could you please confirm the order ID or the email address you used to place the order? That will help me locate the details quickly. Thanks for your patience!",
+      "scores": {
+        "helpfulness": 4,
+        "relevance": 4,
+        "grounding": 3,
+        "safety": 5,
+        "overall": 4,
+        "reason": "The reply acknowledges the issue, offers to investigate, and requests key details, which is helpful and relevant. It follows the style of past responses but does not directly cite evidence, so grounding is moderate. No false claims are made, ensuring safety."
+      }
+    },
+    {
+      "tweet_id": "671705",
+      "customer_text": "@AmazonHelp I had ordered it in Amazon US and was delivered at US address itself.. So, can i get the Amazon US customer care contacts?",
+      "intent": "DELIVERED_NOT_RECEIVED",
+      "decision": "AUTO",
+      "reply": "Hi!  \nYou can reach Amazon\u202fUS customer service here:\u202fhttps://t.co/hApLpMlfHN.  \nThat page will give you the phone number, chat option, and other ways to get help. Let me know if you need anything else!",
+      "scores": {
+        "helpfulness": 5,
+        "relevance": 5,
+        "grounding": 5,
+        "safety": 5,
+        "overall": 5,
+        "reason": "The reply directly addresses the request by providing the exact link used in prior responses, making it highly helpful, relevant, and grounded in historical evidence. It contains no false claims or risky content, ensuring safety. Overall, it meets all quality criteria perfectly."
+      }
+    },
+    {
+      "tweet_id": "605153",
+      "customer_text": "@AmazonHelp I do not see the feedback button anywhere in the mobile website \u00af\\_(\u30c4)_/\u00af",
+      "intent": "PRODUCT_PROBLEM",
+      "decision": "AUTO",
+      "reply": "Hi there! The feedback button is currently only available on the desktop site. You can share your thoughts by visiting the feedback page directly: https://t.co/Nur28jv4XD. If you\u2019d like, I can also help you submit feedback through our support portal. Just let me know!",
+      "scores": {
+        "helpfulness": 4,
+        "relevance": 5,
+        "grounding": 5,
+        "safety": 5,
+        "overall": 4,
+        "reason": "The reply directly addresses the missing feedback button, offers a link and an alternative, and is supported by past responses. It is safe and relevant, though a bit more concise could improve clarity."
+      }
+    }
+  ]
+}
