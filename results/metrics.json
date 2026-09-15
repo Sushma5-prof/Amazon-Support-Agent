@@ -1,0 +1,15 @@
+{
+  "model": "Ensemble (word TF-IDF + char n-gram TF-IDF + LinearSVC)",
+  "train_examples": 550,
+  "golden_examples": 220,
+  "root_overlap": 0,
+  "accuracy": 0.7273,
+  "macro_f1": 0.7142,
+  "failures": 60,
+  "baselines": {
+    "majority_class": 0.0909,
+    "tfidf_lr_unigrams": 0.6773,
+    "svm_bigrams": 0.6773,
+    "lr_bigrams_C5": 0.6818
+  }
+}
