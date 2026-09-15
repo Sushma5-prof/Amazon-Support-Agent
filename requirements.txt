@@ -10,3 +10,5 @@ uvicorn
 pydantic
 typing-extensions
 requests
+groq
+python-dotenv

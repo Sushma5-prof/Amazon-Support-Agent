@@ -1,13 +1,16 @@
 import os
 import sys
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
+from pathlib import Path
 import pandas as pd
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(PROJECT_ROOT))
+
 from src.intents import IntentClassifier
 from src.preprocessing import train_dev_split
 
-DATA_PATH = r'D:/Progress/Hiver/hiver-ai-support-agent/data/golden_set.csv'
-MODEL_PATH = r'D:/Progress/Hiver/hiver-ai-support-agent/data/processed/intent_model.joblib'
+DATA_PATH = PROJECT_ROOT / "data" / "golden_set.csv"
+MODEL_PATH = PROJECT_ROOT / "data" / "processed" / "intent_model.joblib"
 
 def main():
     df = pd.read_csv(DATA_PATH)

@@ -1,9 +1,12 @@
 import sys
+from pathlib import Path
 import pandas as pd
 from collections import Counter
-sys.path.insert(0, r'D:/Progress/Hiver/hiver-ai-support-agent')
 
-GOLDEN_PATH = r'D:/Progress/Hiver/hiver-ai-support-agent/data/golden_set.csv'
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(PROJECT_ROOT))
+
+GOLDEN_PATH = PROJECT_ROOT / "data" / "golden_set.csv"
 
 def main():
     df = pd.read_csv(GOLDEN_PATH)

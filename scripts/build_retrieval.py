@@ -1,6 +1,9 @@
 import os
 import sys
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(PROJECT_ROOT))
 
 from src.preprocessing import load_raw_data, build_candidate_pool
 
@@ -9,8 +12,8 @@ from chromadb.config import Settings
 from sentence_transformers import SentenceTransformer
 import numpy as np
 
-DB_PATH  = r'D:/Progress/Hiver/hiver-ai-support-agent/data/processed/chroma_db'
-RAW_PATH = r'D:/Progress/Hiver/hiver-ai-support-agent/data/raw/tweets.csv'
+DB_PATH  = str(PROJECT_ROOT / "data" / "processed" / "chroma_db")
+RAW_PATH = str(PROJECT_ROOT / "data" / "raw" / "tweets.csv")
 BATCH_SIZE = 512
 
 def main():

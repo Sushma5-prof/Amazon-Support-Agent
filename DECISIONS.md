@@ -24,7 +24,7 @@
 
 12. **Didn't build a conversation history feature.** the pipeline treats each tweet as a standalone message. in reality customers often reply multiple times in a thread. adding thread context would improve accuracy but adds complexity — left for next iteration.
 
-13. **Response generator uses GPT-3.5-turbo, not a local model.** originally tried Ollama (qwen2:1.5b) but local generation quality was too inconsistent for the grounding check to work reliably. swapped to OpenAI for a reliable baseline. users need to set OPENAI_API_KEY.
+13. **Response generator uses Groq's hosted LLM, not a local model or paid API.** local generation with small models was inconsistent and heavy on CPU, while commercial APIs like OpenAI incur costs. selected Groq for its free tier and fast inference, making the pipeline easily reproducible by reviewers with zero cost. users set GROQ_API_KEY.
 
 14. **Golden set labels are documented as AI-annotated.** they were assigned by the same rule-based annotator used for training candidate selection, so they're not fully independent. the README and report both say this clearly. the correct fix is manual review — which would be the first thing to do with more time.
 

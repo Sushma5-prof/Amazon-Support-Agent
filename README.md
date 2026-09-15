@@ -14,9 +14,9 @@ venv\Scripts\activate        # windows
 pip install -r requirements.txt
 ```
 
-Add your OpenAI key to a `.env` file in the project root:
+Add your Groq API key (free at console.groq.com) to a `.env` file in the project root:
 ```
-OPENAI_API_KEY=sk-...
+GROQ_API_KEY=gsk_...
 ```
 
 Run setup (one-time — retrieval index takes ~40 min to embed 118k docs on CPU, skip if you just want intent metrics):
@@ -154,7 +154,7 @@ src/
   preprocessing.py   - loads tweets, builds candidate pool
   intents.py         - Intent enum + ensemble classifier
   retrieval.py       - chroma vector search with sentence-transformers
-  response.py        - openai response generation + grounding check
+  response.py        - groq response generation + grounding check
   escalation.py      - escalation logic
   pipeline.py        - langgraph graph
 

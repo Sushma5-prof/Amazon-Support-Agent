@@ -1,13 +1,16 @@
 import os
 import sys
 import json
+from pathlib import Path
 import pandas as pd
-sys.path.insert(0, r'D:/Progress/Hiver/hiver-ai-support-agent')
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(PROJECT_ROOT))
 
 from src.pipeline import SupportAgent
 
-GOLDEN_PATH = r'D:/Progress/Hiver/hiver-ai-support-agent/data/golden_set.csv'
-RESULTS_PATH = r'D:/Progress/Hiver/hiver-ai-support-agent/results/metrics.json'
+GOLDEN_PATH = PROJECT_ROOT / "data" / "golden_set.csv"
+RESULTS_PATH = PROJECT_ROOT / "results" / "metrics.json"
 
 def evaluate():
     df = pd.read_csv(GOLDEN_PATH)

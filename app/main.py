@@ -1,8 +1,9 @@
 """
 Interactive CLI demo for the Hiver AI Support Agent.
 """
+import os
 import sys
-sys.path.insert(0, r'D:/Progress/Hiver/hiver-ai-support-agent')
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from src.pipeline import SupportAgent
 
